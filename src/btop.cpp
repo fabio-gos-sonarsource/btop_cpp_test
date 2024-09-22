@@ -158,7 +158,7 @@ static void print_help_hint() {
 }
 
 //* A simple argument parser
-void argumentParser(const int argc, char **argv) {
+static void argumentParser(const int argc, char **argv) {
 	for(int i = 1; i < argc; i++) {
 		const string argument = argv[i];
 		if (is_in(argument, "-h", "--help")) {
@@ -360,23 +360,23 @@ void clean_quit(int sig) {
 }
 
 //* Handler for SIGTSTP; stops threads, restores terminal and sends SIGSTOP
-void _sleep() {
+static void _sleep() {
 	Runner::stop();
 	Term::restore();
 	std::raise(SIGSTOP);
 }
 
 //* Handler for SIGCONT; re-initialize terminal and force a resize event
-void _resume() {
+static void _resume() {
 	Term::init();
 	term_resize(true);
 }
 
-void _exit_handler() {
+static void _exit_handler() {
 	clean_quit(-1);
 }
 
-void _signal_handler(const int sig) {
+static void _signal_handler(const int sig) {
 	switch (sig) {
 		case SIGINT:
 			if (Runner::active) {
@@ -415,7 +415,7 @@ void _signal_handler(const int sig) {
 }
 
 //* Config init
-void init_config(){
+static void init_config(){
 	atomic_lock lck(Global::init_conf);
 	vector<string> load_warnings;
 	Config::load(Config::conf_file, load_warnings);
@@ -531,7 +531,7 @@ namespace Runner {
 
 	struct runner_conf current_conf;
 
-	void debug_timer(const char* name, const int action) {
+	static void debug_timer(const char* name, const int action) {
 		switch (action) {
 			case collect_begin:
 				debug_times[name].at(collect) = time_micros();
@@ -556,7 +556,7 @@ namespace Runner {
 	}
 
 	//? ------------------------------- Secondary thread: async launcher and drawing ----------------------------------
-	void * _runner(void *) {
+	static void * _runner(void *) {
 		//? Block some signals in this thread to avoid deadlock from any signal handlers trying to stop this thread
 		sigemptyset(&mask);
 		// sigaddset(&mask, SIGINT);

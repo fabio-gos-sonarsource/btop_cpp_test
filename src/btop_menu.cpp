@@ -878,7 +878,7 @@ namespace Menu {
 		Switch
 	};
 
-	int signalChoose(const string& key) {
+	static int signalChoose(const string& key) {
 		auto s_pid = (Config::getB("show_detailed") and Config::getI("selected_pid") == 0 ? Config::getI("detailed_pid") : Config::getI("selected_pid"));
 		static int x{};
 		static int y{};
@@ -986,7 +986,7 @@ namespace Menu {
 		return (redraw ? Changed : retval);
 	}
 
-	int sizeError(const string& key) {
+	static int sizeError(const string& key) {
 		if (redraw) {
 			vector<string> cont_vec;
 			cont_vec.push_back(Fx::b + Theme::g("used")[100] + "Error:" + Theme::c("main_fg") + Fx::ub);
@@ -1008,7 +1008,7 @@ namespace Menu {
 		return NoChange;
 	}
 
-	int signalSend(const string& key) {
+	static int signalSend(const string& key) {
 		auto s_pid = (Config::getB("show_detailed") and Config::getI("selected_pid") == 0 ? Config::getI("detailed_pid") : Config::getI("selected_pid"));
 		if (s_pid == 0) return Closed;
 		if (redraw) {
@@ -1048,7 +1048,7 @@ namespace Menu {
 		return NoChange;
 	}
 
-	int signalReturn(const string& key) {
+	static int signalReturn(const string& key) {
 		if (redraw) {
 			vector<string> cont_vec;
 			cont_vec.push_back(Fx::b + Theme::g("used")[100] + "Failure:" + Theme::c("main_fg") + Fx::ub);
@@ -1080,7 +1080,7 @@ namespace Menu {
 		return NoChange;
 	}
 
-	int mainMenu(const string& key) {
+	static int mainMenu(const string& key) {
 		enum MenuItems { Options, Help, Quit };
 		static int y{};
 		static int selected{};
@@ -1159,7 +1159,7 @@ namespace Menu {
 		return (redraw ? Changed : retval);
 	}
 
-	int optionsMenu(const string& key) {
+	static int optionsMenu(const string& key) {
 		enum Predispositions { isBool, isInt, isString, is2D, isBrowseable, isEditable};
 		static int y{};
 		static int x{};
@@ -1511,7 +1511,7 @@ namespace Menu {
 		return (redraw ? Changed : retval);
 	}
 
-	int helpMenu(const string& key) {
+	static int helpMenu(const string& key) {
 		static int y{};
 		static int x{};
 		static int height{};
