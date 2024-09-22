@@ -481,7 +481,7 @@ namespace Cpu {
 						const int64_t high = stol(readfile(fs::path(basepath + "max"), "80000")) / 1000;
 						const int64_t crit = stol(readfile(fs::path(basepath + "crit"), "95000")) / 1000;
 
-						found_sensors[sensor_name] = {fs::path(basepath + "input"), label, temp, high, crit};
+						found_sensors[sensor_name] = Sensor{fs::path(basepath + "input"), label, temp, high, crit};
 
 						if (not got_cpu and (label.starts_with("Package id") or label.starts_with("Tdie"))) {
 							got_cpu = true;
@@ -514,7 +514,7 @@ namespace Cpu {
 					if (high < 1) high = 80;
 					if (crit < 1) crit = 95;
 
-					found_sensors[sensor_name] = {basepath / "temp", label, temp, high, crit};
+					found_sensors[sensor_name] = Sensor{basepath / "temp", label, temp, high, crit};
 				}
 			}
 

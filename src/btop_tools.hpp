@@ -410,7 +410,7 @@ namespace Tools {
 		atomic<bool>& atom;
 		bool not_true{};
 	public:
-		atomic_lock(atomic<bool>& atom, bool wait = false);
+		explicit atomic_lock(atomic<bool>& atom, bool wait = false);
 		~atomic_lock();
 	};
 
@@ -438,7 +438,7 @@ namespace Tools {
 		bool delayed_report{};
 		Logger::Level log_level = Logger::DEBUG;
 		DebugTimer() = default;
-		DebugTimer(const string name, bool start = true, bool delayed_report = true);
+		explicit DebugTimer(const string name, bool start = true, bool delayed_report = true);
 		~DebugTimer();
 
 		void start();
